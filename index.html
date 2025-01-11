@@ -1,125 +1,159 @@
-<style>
+<html>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    body, html {
-        font-family: Arial, sans-serif;
-        padding: 0;
-        margin: 0;
-        background-color: #f9f9f9;
-    }
-    
-    
-    #syringeVisualization {
-        position: relative;
-        width: 100%;
-        max-width: 540px;
-        height: 45px;
-        margin: 80px auto;
-        margin-bottom: 20px;
-        border: 1px solid #ccc;
-        /* background-image: url('syng.png'); */
-        background-size: contain;
-        background-position: center;
-        background-repeat: no-repeat;
-    
-        img {
-            position: absolute;
-            top: -68px;
-            left: -85px;
-            max-width: 800px;
-        }
-    }
-    
-    #syringeRuler::before {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        height: 100%;
-        width: var(--dosage-fill-width, 0%);
-        background-color: #25adb191;
-        z-index: 1;
-    }
-    
-    #resultDisplay {
-        text-align: center;
-        margin-top: 10px;
-    }
-    
-     .calculator-container {
-        margin-bottom: 20px;
-        padding: 30px;
-        background-color: #f9f9f9;
-        border-radius: 5px;
-    
-        h1 {
-            color: #333;
-            text-align: center;
-        }
-    
-        .calc-flex {
-            display: flex;
-            align-items: center;
-    
-            .calc-col {
-                width: 25%;
+    <style>
+        
+        #syringeVisualization {
+            position: relative;
+            width: 100%;
+            max-width: 540px;
+            height: 45px;
+            margin: 80px auto;
+            margin-bottom: 20px;
+            border: 1px solid red;
+        
+            img {
+                position: absolute;
+                top: -68px;
+                left: -85px;
+                max-width: 800px;
             }
         }
-    
-        label, input, button, #resultDisplay {
-            font-size: 20px;
-            font-weight: 600;
-            margin: 10px 0;
+        
+        #syringeRuler::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 100%;
+            width: var(--dosage-fill-width, 0%);
+            background-color: #25adb191;
+            z-index: 1;
         }
-    
-        .input-group {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-    
-        .input-group input {
-            width: 80px; /* Adjusted to accommodate no more than four digits */
-            max-width: 80px; /* Ensuring the width doesn't exceed */
-            padding: 8px;
-            margin: 10 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+        
+        #resultDisplay {
             text-align: center;
+            margin-top: 10px;
         }
-    
-        .input-group .unit-label {
-            font-size: 20px;
-            color: #555;
-        }
-    
-        input[type="number"], select {
-            padding: 8px;
-            width: calc(100% - 22px);
+        
+        .calculator-container {
+            font-family: Arial, sans-serif;
             margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            padding: 30px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        
+            h1 {
+                color: #333;
+                text-align: center;
+            }
+        
+            .calc-flex {
+                display: flex;
+                align-items: center;
+        
+                .calc-col {
+                    width: 25%;
+                }
+            }
+        
+            label, input, button, #resultDisplay {
+                font-size: 20px;
+                font-weight: 600;
+                margin: 10px 0;
+            }
+        
+            .input-group {
+                display: flex;
+                align-items: center;
+                margin-bottom: 20px;
+            }
+        
+            .input-group input {
+                width: 80px; /* Adjusted to accommodate no more than four digits */
+                max-width: 80px; /* Ensuring the width doesn't exceed */
+                padding: 8px;
+                margin: 10 5px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                text-align: center;
+            }
+        
+            .input-group .unit-label {
+                font-size: 20px;
+                color: #555;
+            }
+        
+            input[type="number"], select {
+                padding: 8px;
+                width: calc(100% - 22px);
+                margin-bottom: 20px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+
+            button {
+                padding: 10px 20px;
+                height: 60px;
+                width: 200px;
+                background-color: #25adb1;
+                color: #fff;
+                border: none;
+                border-radius: 30px;
+                cursor: pointer;
+            }
+            
+            button:hover {
+                background-color: #0f8083;
+            }
+        
         }
+        
+        
+        
+        
+
+        @media only screen and (max-width: 600px) {
+            .calculator-container {
+
+        
+            .calc-flex {
+                display: block;
+                align-items: center;
+                
+                .calc-col {
+                    width: 100%;
+                    margin-top: 30px;
+                }
+
+                .btn-col {
+                    text-align: center;
+                }
+            }
+
+            #syringeVisualization {
+                position: relative;
+                width: 75%;
+                left: -20px;
+                height: 25px;
+                margin: 80px auto;
+                margin-bottom: 20px;
+                border: 1px solid #ccc;
+            
+                img {
+                    position: absolute;
+                    width: 150%;
+                    top: -35px;
+                    left: -16%;
+                    height: 85px;
+                }
+            }
     
-    }
-    
-    
-    
-    button {
-        padding: 10px 20px;
-        height: 60px;
-        width: 200px;
-        background-color: #25adb1;
-        color: #fff;
-        border: none;
-        border-radius: 30px;
-        cursor: pointer;
-    }
-    
-    button:hover {
-        background-color: #0f8083;
-    }
+        
+            }
+        }
     </style>
-    
+        
     <section class="calculator-container">
         <h1>GLP-1 and Peptide Dosing Calculator</h1>
         <!-- <label for="medicationType">Select Medication:</label>
@@ -143,7 +177,7 @@
                     <input style="max-width: 160px;" type="number" id="targetDose" placeholder="1" value="1" step="0.25" aria-label="Target dose to be administered in milligrams">
                 </div>
             </div>
-            <div class="calc-col">
+            <div class="calc-col btn-col">
                 <button onclick="calculateDose()">CALCULATE</button>
             </div>
         </div>
@@ -204,3 +238,4 @@
     // Set default values on page load
     window.onload = setDefaultValues;
     </script>
+</html>
