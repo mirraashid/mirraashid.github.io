@@ -559,7 +559,7 @@
             totalCost = annualPremium + oopMax; // fallback
         }
 
-        document.getElementById(`result${option}`).innerText = `Total Out-of-Pocket Cost for Option #${option}: $${totalCost.toFixed(2)}`;
+        document.getElementById(`result${option}`).innerText = `Total Out-of-Pocket Cost for Option #${option}: $${(totalCost.toFixed(2)*1).toLocaleString()}`;
     } 
 
     function calculateOption1() {
