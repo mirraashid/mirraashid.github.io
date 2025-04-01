@@ -136,7 +136,7 @@
                             </div>
                         </div>
                         <div class="col-12 q-container">
-                            <span>Are my hospitals and specialists(e.g., oncologist, surgeon, etc.)in the plan's network?</span>
+                            <span>Are my hospitals and specialists (e.g., oncologist, surgeon) in the plan's network?</span>
                             <div class="radio-container">
                                 <div>
                                     <input type="radio" name="plan-network-A" value="Yes" checked />
@@ -345,6 +345,24 @@
                             </div>
                         </div>
 
+                        <div class="col-12 q-container mt-4">
+                            <span>Plan Inclusion Type - </span>
+                                <div>
+                                    <div>
+                                        <input type="radio" name="planToBeCalculated_1" value="1" checked />
+                                        <label>Includes a separate deductible and/or out-of-pocket maximum for prescription drugs?</label>
+                                    </div>
+                                    <div>
+                                        <input type="radio" name="planToBeCalculated_1" value="2" />
+                                        <label>Doesn't include deductibles in the out-of-pocket maximum?</label>
+                                    </div>
+                                    <div>
+                                        <input type="radio" name="planToBeCalculated_1" value="3" />
+                                        <label>Includes deductibles and prescription out-of-pocket costs in the out-of-pocket maximum?</label>
+                                    </div>
+                            </div>
+                        </div>
+
                         <div class="col-12 q-container mt-4 text-center">
                             <button onclick="calculateOption1()">Calculate Option 1</button>
                         </div>
@@ -420,6 +438,24 @@
                                         </div>
                                         <input type="text" id="E_2" class="form-control" id="inlineFormInputGroup" placeholder="">
                                     </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 q-container mt-4">
+                                <span>Plan Inclusion Type - </span>
+                                    <div>
+                                        <div>
+                                            <input type="radio" name="planToBeCalculated_2" value="1" checked />
+                                            <label>Includes a separate deductible and/or out-of-pocket maximum for prescription drugs?</label>
+                                        </div>
+                                        <div>
+                                            <input type="radio" name="planToBeCalculated_2" value="2" />
+                                            <label>Doesn't include deductibles in the out-of-pocket maximum?</label>
+                                        </div>
+                                        <div>
+                                            <input type="radio" name="planToBeCalculated_2" value="3" />
+                                            <label>Includes deductibles and prescription out-of-pocket costs in the out-of-pocket maximum?</label>
+                                        </div>
                                 </div>
                             </div>
 
@@ -536,27 +572,20 @@
         const oopMax = parseFormattedNumber(document.getElementById(`C_${option}`).value) || 0;
         const rxDeductible = parseFormattedNumber(document.getElementById(`D_${option}`).value) || 0;
         const rxOopMax = parseFormattedNumber(document.getElementById(`E_${option}`).value) || 0;
+        const planToBeCalculated = document.querySelector(`input[name="planToBeCalculated_${option}"]:checked`)?.value;
 
-        // Annual premium
         const annualPremium = monthlyPremium * 12;
 
         let totalCost = 0;
 
-        // Case 1: Integrated deductible and OOP max
-        if (deductible === 0 && rxOopMax === 0) {
+        if (planToBeCalculated === "3") {
             totalCost = annualPremium + oopMax ;
         }
-        // Case 2: Separate deductible but shared OOP max
-        else if (deductible > 0 && rxOopMax === 0) {
+        else if (planToBeCalculated === "2") {
             totalCost = annualPremium + deductible + oopMax;
         }
-        // Case 3: Separate deductible and separate OOP max
-        else if (deductible > 0 && rxDeductible > 0 && rxOopMax > 0) {
-            // We assume the person hits both OOP maximums
+        else if (planToBeCalculated === "1") {
             totalCost = annualPremium + deductible + oopMax + rxDeductible + rxOopMax;
-        }
-        else {
-            totalCost = annualPremium + oopMax; // fallback
         }
 
         document.getElementById(`result${option}`).innerText = `Total Out-of-Pocket Cost for Option #${option}: $${(totalCost.toFixed(2)*1).toLocaleString()}`;
