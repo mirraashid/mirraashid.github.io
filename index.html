@@ -359,10 +359,23 @@
                             </div>
                         </div>
 
+                        <div class="col-12 q-container mt-4" id="toggle_3_1" style="display: none;">
+                            <span>Is there a separate out-of-pocket maximum for prescription drugs? If yes, enter amount: </span>
+                            <div class="col-md-5">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                    <div class="input-group-text">$</div>
+                                    </div>
+                                    <input type="text" id="E_1" class="form-control" id="inlineFormInputGroup" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="col-12 q-container mt-4" id="toggle_2_1" style="display: none;">
                             <span>Is the deductible for prescription drugs included in the prescription drug out of pocket maximum? </span>
                             <div>
-                                <form onchange="handlePlanChange3(1)">
+                                <!-- <form onchange="handlePlanChange3(1)"> -->
+                                <form>
                                     <div>
                                         <input type="radio" name="opt_3_1" value="1" />
                                         <label>Yes</label>
@@ -376,17 +389,7 @@
                         </div>
 
 
-                        <div class="col-12 q-container mt-4" id="toggle_3_1" style="display: none;">
-                            <span>Is there a separate out-of-pocket maximum for prescription drugs? If yes, enter amount: </span>
-                            <div class="col-md-5">
-                                <div class="input-group mb-2">
-                                    <div class="input-group-prepend">
-                                    <div class="input-group-text">$</div>
-                                    </div>
-                                    <input type="text" id="E_1" class="form-control" id="inlineFormInputGroup" placeholder="">
-                                </div>
-                            </div>
-                        </div>
+                       
 
                         <div class="col-12 q-container mt-4 text-center">
                             <button onclick="calculateOption1()">Calculate Option 1</button>
@@ -482,11 +485,24 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="col-12 q-container mt-4" id="toggle_3_2" style="display: none;">
+                                <span>Is there a separate out-of-pocket maximum for prescription drugs? If yes, enter amount: </span>
+                                <div class="col-md-5">
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                        <div class="input-group-text">$</div>
+                                        </div>
+                                        <input type="text" id="E_2" class="form-control" id="inlineFormInputGroup" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
     
                             <div class="col-12 q-container mt-4" id="toggle_2_2" style="display: none;">
                                 <span>Is the deductible for prescription drugs included in the prescription drug out of pocket maximum? </span>
                                 <div>
-                                    <form onchange="handlePlanChange3(2)">
+                                    <!-- <form onchange="handlePlanChange3(2)"> -->
+                                    <form>
                                         <div>
                                             <input type="radio" name="opt_3_2" value="1" />
                                             <label>Yes</label>
@@ -499,18 +515,7 @@
                                 </div>
                             </div>
     
-    
-                            <div class="col-12 q-container mt-4" id="toggle_3_2" style="display: none;">
-                                <span>Is there a separate out-of-pocket maximum for prescription drugs? If yes, enter amount: </span>
-                                <div class="col-md-5">
-                                    <div class="input-group mb-2">
-                                        <div class="input-group-prepend">
-                                        <div class="input-group-text">$</div>
-                                        </div>
-                                        <input type="text" id="E_2" class="form-control" id="inlineFormInputGroup" placeholder="">
-                                    </div>
-                                </div>
-                            </div>
+
 
                             <div class="col-12 q-container mt-4 text-center">
                                 <button onclick="calculateOption2()">Calculate Option 2</button>
@@ -626,6 +631,7 @@
             //show next questions
             document.getElementById(`toggle_1_${opt}`).style.display = 'block';
             document.getElementById(`toggle_2_${opt}`).style.display = 'block';
+            document.getElementById(`toggle_3_${opt}`).style.display = 'block';
             
         } else {
             document.getElementById(`toggle_1_${opt}`).style.display = 'none';
