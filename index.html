@@ -191,7 +191,10 @@
                                       <div class="card-bar orange-bar"></div>
                                     </div>
                                   </div>
-                                  
+                                  <!-- Chart -->
+                                  <div>
+                                    <canvas id="loanChart" width="800" height="400"></canvas>
+                                  </div>
                                 
                             </div>
                         </div>
@@ -204,7 +207,7 @@
 </body>
 
 
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 
 
@@ -243,6 +246,29 @@
         return parseFloat(value.replace(/,/g, "")) || 0;
     }
 
+    function generateAmortizationData(principal, annualInterestRate, years) {
+        const monthlyRate = annualInterestRate / 12 / 100;
+        const totalMonths = years * 12;
+        const monthlyPayment = principal * monthlyRate * Math.pow(1 + monthlyRate, totalMonths) / (Math.pow(1 + monthlyRate, totalMonths) - 1);
+
+        let balance = principal;
+        const labels = []; // numeric index (0 to 360), but we only show labels for full years
+        const data = [];
+
+        for (let month = 0; month <= totalMonths; month++) {
+            if (month > 0) {
+            const interest = balance * monthlyRate;
+            const principalPaid = monthlyPayment - interest;
+            balance -= principalPaid;
+            }
+
+            labels.push(month / 12); // Keep in years (e.g., 0, 0.08, 0.17..., 1, 1.08, ... 30)
+            data.push(parseFloat(balance.toFixed(2)));
+        }
+
+        return { labels, data };
+    }
+
 
     function calculateMonthlyPayment(principal, annualInterestRate, loanTermYears) {
         const monthlyRate = annualInterestRate / 12 / 100;
@@ -265,18 +291,65 @@
         var constructionLength = parseFormattedNumber(document.getElementById('constructionLength').value);
         var mortgageRate = parseFormattedNumber(document.getElementById('mortgageRate').value);
         var mortgageTerm = parseFormattedNumber(document.getElementById('mortgageTerm').value);
- 
-
-       const totalCost = landCost + constructionCost;
-       const mortgageBalance = totalCost - downPayment;
-       const monthlyPayment = calculateMonthlyPayment(mortgageBalance, mortgageRate, mortgageTerm)
-
-       document.getElementById('out_1').innerText = `$${locale_integer(mortgageBalance)}`;
-       document.getElementById('out_2').innerText = `$${locale_integer(monthlyPayment)}`;
 
 
+        const totalCost = landCost + constructionCost;
+        const mortgageBalance = totalCost - downPayment;
+        const monthlyPayment = calculateMonthlyPayment(mortgageBalance, mortgageRate, mortgageTerm)
 
-    }
+        document.getElementById('out_1').innerText = `$${locale_integer(mortgageBalance)}`;
+        document.getElementById('out_2').innerText = `$${locale_integer(monthlyPayment)}`;
+
+        const { labels, data } = generateAmortizationData(mortgageBalance, mortgageRate, mortgageTerm);
+
+        //CHART PLOTTING
+        const ctx = document.getElementById('loanChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                label: 'Remaining Balance',
+                data: data,
+                borderColor: '#e26a00',
+                backgroundColor: 'transparent',
+                pointRadius: 0,
+                tension: 0.25
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                legend: { display: false },
+                tooltip: { enabled: false } 
+                // tooltip: {
+                //         callbacks: {
+                //             label: context => `$${context.parsed.y.toLocaleString(undefined, { maximumFractionDigits: 2 })}`
+                //         }
+                //     }
+                },
+                scales: {
+                x: {
+                    title: { display: true, text: 'Years Since Loan Start' },
+                    ticks: {
+                    callback: function(value, index, ticks) {
+                        return Number(this.getLabelForValue(value)).toFixed(0); // Show full years only
+                    },
+                    maxTicksLimit: 31 // From 0 to 30
+                    }
+                },
+                y: {
+                    title: { display: true, text: 'Loan Amount ($)' },
+                    beginAtZero: true,
+                    ticks: {
+                    callback: value => `$${value / 1000}k`
+                    }
+                }
+                }
+            }
+        });
+
+        }
 
     //call the calculate on page load
     calculate();
