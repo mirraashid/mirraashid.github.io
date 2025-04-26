@@ -52,6 +52,41 @@
             font-weight: 700;
         }
 
+        .btn-1 {
+            background: #66c28f80;
+            border: 1px solid;
+            cursor: pointer;
+            height: 50px;
+            width: 200px;
+            font-size: large;
+            font-weight: 400;
+        }
+
+        .btn-2 {
+            background: #2c797ea6;
+            border: 1px solid;
+            cursor: pointer;
+            height: 50px;
+            width: 200px;
+            font-size: large;
+            font-weight: 400;
+        }
+
+        .btn-3 {
+            background: #074733;
+            margin: auto;
+            display: block;
+            margin-top: 30px;
+            margin-bottom: 50px;
+            border: 1px solid;
+            cursor: pointer;
+            height: 50px;
+            width: 200px;
+            font-size: large;
+            font-weight: 400;
+            color: #ffffff;
+        }
+
         #result1{
             background: #66c28f80;
         }
@@ -392,7 +427,7 @@
                        
 
                         <div class="col-12 q-container mt-4 text-center">
-                            <button onclick="calculateOption1()">Calculate Option 1</button>
+                            <button class="btn btn-1" onclick="calculateOption1()">Calculate Option 1</button>
                         </div>
 
 
@@ -518,7 +553,7 @@
 
 
                             <div class="col-12 q-container mt-4 text-center">
-                                <button onclick="calculateOption2()">Calculate Option 2</button>
+                                <button class="btn btn-2" onclick="calculateOption2()">Calculate Option 2</button>
                             </div>
     
                     </div>
@@ -532,6 +567,11 @@
                 <div class="col main-heading">
                     <h3>Results</h3>
                 </div>
+            </div>
+            <div>
+                <p style="margin-top: 20px; font-size: 18px;">
+                    Below is your total out-of-pocket costs for your in-network, covered, health care for the year, assuming health care expenses will reach the out-of-pocket maximum.
+                </p>
             </div>
             <div class="row text-center">
                 <div class="col-sm">
@@ -562,6 +602,9 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div>
+                <button class="btn btn-3">GET PDF</button>
             </div>
         </div>
     </div>
